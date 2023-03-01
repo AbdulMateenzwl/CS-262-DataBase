@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{listings}
+
+\title{Testing}
+\author{ABDUL MATEEN}
+\date{January 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\indent \indent  In this document i will explain the home task step by step.
+
+\section{Tasks}
+
+\subsection{Write a query to report orders which are delayed shipped :}
+\begin{lstlisting}
+    select * 
+    from orders
+    where requiredDate < shippedDate
+\end{lstlisting}
+
+\subsection{Our belongs to how many countries?}
+\begin{lstlisting}
+    select distinct country
+    from employees
+\end{lstlisting}
+
+\subsection{Is there any employee who is not accountable?}
+
+
+\subsection{List the name of Product which have been discount :}
+\begin{lstlisting}
+    select *
+    from products
+    where discontinued = 1
+\end{lstlisting}
+
+\subsection{ List the IDs the orders on which discount was not provided :}
+\begin{lstlisting}
+    select OrderID
+    from [order details]
+    where discount = 0
+\end{lstlisting}
+
+
+\subsection{Enlist the names of customers who have not specified their region :}
+\begin{lstlisting}
+    select contactName
+    from customers
+    where region is NULL
+\end{lstlisting}
+
+\subsection{Enlist the names of customers along with contact \\ number who either belongs to UK or USA :}
+\begin{lstlisting}
+    select contactName
+    from customers
+    where country = 'UK' or country = 'USA'
+\end{lstlisting}
+
+\subsection{Report the names of companies who have provided their web page :}
+\begin{lstlisting}
+    select CompanyName
+    from Suppliers
+    where HomePage is NULL
+\end{lstlisting}
+
+\subsection{In which countries, products were sold in year 1997 :}
+\begin{lstlisting}
+    select shipCountry
+    from orders
+    where year(shippedDate) = 1
+\end{lstlisting}
+
+\subsection{ List the ids of customers whose orders were never shipped :}
+\begin{lstlisting}
+    select customerid
+    from orders
+    where shippeddate is NULL
+\end{lstlisting}
+
+\subsection{Write a query to report suppliers with their id, company name and city :}
+\begin{lstlisting}
+    select supplierid,companyname,country
+    from suppliers
+\end{lstlisting}
+
+\subsection{Our employees belong to how many countries. List them who are used to live in London :}
+\begin{lstlisting}
+    select * 
+    from employees
+    where city = 'London'
+\end{lstlisting}
+
+\subsection{List the names of products which have not been discontinued :}
+\begin{lstlisting}
+    select productname 
+    from products
+    where discontinued = 0
+\end{lstlisting}
+
+\subsection{List the IDs the orders on which discount was 0.1 or less}
+\begin{lstlisting}
+    select productid
+    from [order details]
+    where discount <= 0.1
+\end{lstlisting}
+
+\subsection{Enlist the IDS, names of employees and their contact number with extensions who have not specified their 
+region. }
+\begin{lstlisting}
+    select employeeid,concat(firstname,' ',lastname) as employeeName,homephone
+    from employees
+    where region is NULL
+\end{lstlisting}
+
+\end{document}

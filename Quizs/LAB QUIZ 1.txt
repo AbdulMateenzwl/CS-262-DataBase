@@ -1,0 +1,46 @@
+
+1--
+
+SELECT O.ShipCity,
+(
+SELECT COUNT(ORR.OrderID)
+FROM ORDERS AS ORR
+WHERE ORR.SHIPCITY=O.SHIPCITY AND ORR.ShippedDate IS NULL
+) AS UNSHIPPED,
+(
+SELECT COUNT(ORT.OrderID)
+FROM ORDERS AS ORT
+WHERE ORT.SHIPCITY=O.SHIPCITY AND ORT.ShippedDate IS NOT NULL
+) AS SHIPPED
+FROM ORDERS O
+GROUP BY ShipCity
+
+
+2--
+
+SELECT Customers.CustomerID,Products.CategoryID
+FROM ORDERS
+JOIN [Order Details]
+ON ORDERS.OrderID = [Order Details].OrderID
+JOIN Customers
+ON Customers.CustomerID = ORDERS.CustomerID
+JOIN Products
+ON Products.ProductID= [Order Details].ProductID
+JOIN Categories
+ON Categories.CategoryID = Products.CategoryID
+GROUP BY Customers.CustomerID ,Products.CategoryID
+ORDER BY COUNT(PRODUCTS.ProductID) desc
+
+--3--
+
+SELECT TOP(1) Customers.City
+FROM Customers
+GROUP BY City
+ORDER BY COUNT(Customers.CustomerID) DESC
+
+--4
+SELECT E.FirstName,E.LastName
+FROM Employees E
+JOIN Employees M
+ON E.ReportsTo = M.EmployeeID
+WHERE M.HireDate < E.HireDate
