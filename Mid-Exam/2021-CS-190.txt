@@ -1,0 +1,102 @@
+Q1
+select ANU.Email,SS.FullName
+from SpikoStudent SS
+JOIN ASPNETUSERS ANU
+ON ANU.Id = SS.UserId
+where SS.StudentId in ( select SSS.StudentId
+	from SpikoStudentSection SSS) AND 
+	SS.StudentId NOT IN (
+		SELECT SAS.StudentId
+		FROM SpikoAssignmentSubmission SAS
+	)
+***
+
+
+Q2
+SELECT SC.Session,SC.Year
+FROM SpikoStudent SS
+JOIN SpikoStudentSection SSS
+ON SS.StudentId = SSS.StudentId
+JOIN AspNetUsers ANU
+ON SS.UserId = ANU.Id
+JOIN SpikoCourse SC
+ON SSS.SectionId = SC.CourseId
+ORDER BY SC.Session,SC.Year
+***
+
+
+Q3
+SELECT SC.CourseTitle
+FROM SpikoCourse SC
+JOIN SpikoSection SS
+ON SC.CourseId = SS.CourseId
+WHERE SS.Id NOT IN (
+		SELECT SSS.SectionId
+		FROM SpikoStudentSection SSS
+	)
+***
+
+
+Q4
+SELECT  SS.FullName,SUM(ObtainedMarks) AS TOTALMARKS
+FROM (
+		SELECT *
+		FROM SpikoCourse
+		WHERE SpikoCourse.CourseId = 1015
+	) SC
+JOIN SpikoEvaluation SE
+ON SC.CourseId = SE.CourseId
+JOIN SpikoStudentEvaluation SSE
+ON SE.ID = SSE.EvaluationId
+JOIN SpikoStudent SS
+ON SSE.StudentId = SS.StudentId
+GROUP BY SSE.StudentId,SS.FullName
+***
+
+
+Q5
+SELECT *
+FROM SpikoAssignment SA
+JOIN SpikoAssignmentSubmission SAS
+ON SA.Id = SAS.AssignmentId
+GROUP BY StudentId
+HAVING COUNT(DATEDIFF(HOUR,SA.OpenDate,SAS.SubmittedOn) > 1)
+
+
+Q6
+SELECT SC.CourseTitle
+FROM SpikoCourse SC
+JOIN SpikoSection SS
+ON SC.CourseId  = SS.CourseId
+JOIN SpikoStudentSection SSS
+ON SS.Id = SSS.SectionId
+GROUP BY SC.CourseId, SS.Id,SC.CourseTitle
+HAVING SUM(SSS.StudentId) > 50 
+***
+
+
+Q7
+SELECT SA.ID
+FROM SpikoAssignmentSubmission SAS
+JOIN SpikoAssignment SA
+ON SA.ID = SAS.AssignmentId
+WHERE SAS.SubmittedOn > SA.DeadLine AND COUNT(SAS.StudentId) >2
+***
+
+
+Q8
+SELECT SC.CourseTitle
+FROM SpikoAssignment SA
+JOIN SpikoSection SS
+ON SS.CourseId = SA.SectionId
+JOIN SpikoCourse SC
+ON SC.CourseId = SC.CourseId
+WHERE DATEDIFF(HOUR,SA.OpenDate,SA.DeadLine) > 48
+***
+
+
+--9
+
+
+
+
